@@ -4,6 +4,7 @@ import random
 
 pygame.init()
 
+Branco = (255, 255, 255)
 
 x = 800
 y = 600
@@ -23,6 +24,9 @@ fundo = pygame.image.load(diretorio)
 diretorio = os.path.join('imagens', 'Carro2.png')
 carro2 = pygame.image.load(diretorio)
 
+diretorio = os.path.join("fontes", "Aero Matics Bold.ttf")
+fonte = pygame.font.Font(diretorio, 24)
+
 
 ax = 0
 by = 0
@@ -37,13 +41,16 @@ def carros():
 
 	if by > 600:
 		criar = True
-	by = by + 2
+	by = by + 10
 
 	tela.blit(carro2, (ax, by))
 		
 
-ax1 = 0
-by1 = 0
+ax1 = 400
+by1 = 450
+vida = 3
+pontos = 0
+
 def player():
 	global ax1, by1
 	
@@ -55,14 +62,36 @@ def player():
 	elif key[pygame.K_RIGHT]:
 		ax1 = ax1 + 5
 	
-	if ax1 >= 160:
-		ax1 = 160
+	if ax1 >= 560:
+		ax1 = 560
 	
-	if ax1 <= - 220:
-		ax1 = -220
+	if ax1 <= 180:
+		ax1 = 180
+		
+	tela.blit(carro, (ax1, by1))
+
+
+x2 = 0
+y2 = 0
+race = True
+def pista():
+	global x2, y2, race 
 	
-	tela.blit(carro, (ax1 + 400, by1 + 450))
+	if race:
+		y2 = y2 + 20
+		
 	
+	if y2 > 250:
+		y2 = random.randint(0, 0)
+
+	tela.blit(fundo, (x2, y2-200))	
+
+def texto():
+	surface = fonte.render("Vida = " + str(vida),True, Branco)
+	tela.blit(surface, (10, 10))
+	surface = fonte.render("Pontos = " + str(pontos),True, Branco)
+	tela.blit(surface, (10, 40))
+
 
 jogando = True
 
@@ -71,10 +100,16 @@ while jogando:
 		if evento.type == pygame.QUIT:
 			jogando = False
 	
-	tela.blit(fundo, (0, 0))
+	pista()
 	carros()
 	player()	
+
+	texto()
+			
+
 	pygame.display.update()
+
+	
 	 					
 
 									
