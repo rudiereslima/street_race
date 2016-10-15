@@ -166,6 +166,7 @@ while jogando:
 	player()	
 	texto()
 	policia()
+	
 	distancia = math.sqrt((ax-ax1)**2 + (by - by1)**2)
 	if distancia < (iraio+nraio):
 		vida = 0

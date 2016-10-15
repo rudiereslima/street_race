@@ -144,7 +144,7 @@ def pista():
 def texto():
 	surface = fonte.render("Vida = " + str(vida),True, Branco)
 	tela.blit(surface, (10, 10))
-	surface = fonte.render("Tempo: %.fs" % segundo ,True, Branco)
+	surface = fonte.render("Tempo: %.f" % segundo ,True, Branco)
 	tela.blit(surface, (10, 40))
 	
 jogando = True
