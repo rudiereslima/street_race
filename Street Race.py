@@ -4,6 +4,7 @@ import time
 import math
 
 pygame.init()
+pygame.mixer.init()
 
 Branco = (255, 255, 255)
 
@@ -41,6 +42,14 @@ policial = pygame.image.load(diretorio)
 diretorio = os.path.join("fontes", "Aero Matics Bold.ttf")
 fonte = pygame.font.Font(diretorio, 24)
 fonte2 = pygame.font.Font(diretorio, 48)
+
+fundomusic = os.path.join("sons", "Joe Satriani - Can t Go Back.ogg")
+som = pygame.mixer.Sound(fundomusic)
+som.set_volume(0.1)
+
+#music = os.path.join("sons", "pulloff.wav")
+#som1 = pygame.mixer.Sound(music)
+#som1.set_volume(0.02)
 		
 ax = 0
 by = 0
@@ -204,9 +213,14 @@ def texto():
 	tela.blit(surface, (10, 10))
 	surface = fonte.render("Tempo: %.f" % segundo ,True, Branco)
 	tela.blit(surface, (10, 40))
+	surface = fonte.render("Pontos: " + str(pontos), True, Branco)
+	tela.blit(surface, (10, 70))
 	
 jogando = True
 segundo = 120
+pontos = 0
+audio = True
+
 while jogando:
 	relogio.tick(60)
 
@@ -215,14 +229,12 @@ while jogando:
 			jogando = False
 	
 	segundo = segundo - 0.02
+	pontos = pontos + 1
 	
-	if segundo <= 0:
-		surface = fonte2.render("You Win!", True, Branco)
-		tela.blit(surface, (300, 300))	
-		jogando = False
-		time.sleep(5)
-		pygame.display.quit()	
-
+	if audio:
+		#som1.play()
+		som.play()
+		
 	pista()
 	carros()
 	carros2()
@@ -263,7 +275,16 @@ while jogando:
 		surface = fonte2.render("Game Over!", True, Branco)
 		tela.blit(surface, (300, 300))	
 		jogando = False
+
+	if vida == 1 and segundo <= 0:
+		surface = fonte2.render("You Win!", True, Branco)
+		tela.blit(surface, (300, 300))	
+		jogando = False
 	
+	if segundo <= 0:
+		time.sleep(5)
+		pygame.display.quit()	
+
 	pygame.display.update()
 	
 	if vida < 1: 
