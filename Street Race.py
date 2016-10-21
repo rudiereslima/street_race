@@ -3,6 +3,8 @@ import random
 import time
 import math
 
+os.environ["SDL_VIDEO_CENTERED"] = "1"
+
 pygame.init()
 pygame.mixer.init()
 
@@ -202,7 +204,7 @@ def pista():
 		y2 = y2 + 20
 		
 	if y2 > 250:
-		y2 = random.randint(0, 0)
+		y2 = 0
 
 	tela.blit(fundo, (x2, y2-200))	
 
@@ -223,7 +225,7 @@ audio = True
 
 while jogando:
 	relogio.tick(60)
-
+	
 	for evento in pygame.event.get():
 		if evento.type == pygame.QUIT:
 			jogando = False
@@ -276,19 +278,14 @@ while jogando:
 		tela.blit(surface, (300, 300))	
 		jogando = False
 
-	if vida == 1 and segundo <= 0:
+	if segundo <= 0.5 and vida == 1:
 		surface = fonte2.render("You Win!", True, Branco)
 		tela.blit(surface, (300, 300))	
-		jogando = False
-	
-	if segundo <= 0:
-		time.sleep(5)
-		pygame.display.quit()	
-
+				
 	pygame.display.update()
 	
-	if vida < 1: 
-		time.sleep(5)	
+	if vida < 1 or segundo <= 0.5: 
+		time.sleep(6)	
 		pygame.display.quit()
 sys.exit()	
 	 					
